@@ -147,7 +147,7 @@ class PostController extends Controller
     }
 
     /**
-     * Update and rename image file for saving in local / S3
+     * Update and rename image file for saving in local
      *
      * @param Request $request
      * @param Int $postId
@@ -156,11 +156,9 @@ class PostController extends Controller
     private function saveImage($request, $postId = null)
     {
         # rename the image to remove the risk of overwriting 
-        $name       = time().'.'.$request->image->extension();
-        $storage    = config('app.env') !== 'local' ? 's3' : '';
-        $folder     = config('app.env') !== 'local' ? self::S3_IMAGES_FOLDER : self::LOCAL_STORAGE_FOLDER;
+        $name = time() . '.' . $request->image->extension();
 
-        $request->image->storeAs($folder, $name, $storage);
+        $request->image->storeAs(self::LOCAL_STORAGE_FOLDER, $name);
 
         # delete if there's any existing image to be overwritten
         $this->deletePostImage($postId);
@@ -177,17 +175,12 @@ class PostController extends Controller
     public function deletePostImage($postId)
     {
         $postImage  = $this->post->where('id', $postId)->pluck('image')->first();
-        $folder     = config('app.env') === 'local' 
-                    ? self::LOCAL_STORAGE_FOLDER 
-                    : self::S3_IMAGES_FOLDER;
-
-        $disk   = config('app.env') === 'local' 
-                ? self::LOCAL_DISK 
-                : self::S3_DISK;
 
         if ($postImage) {
-            if (Storage::disk($disk)->exists($folder . $postImage)) {
-                Storage::disk($disk)->delete($folder . $postImage);
+            $imgPath = self::LOCAL_STORAGE_FOLDER . $postImage;
+
+            if (Storage::disk('local')->exists($imgPath)) {
+                Storage::disk('local')->delete($imgPath);
             }
         }
     }

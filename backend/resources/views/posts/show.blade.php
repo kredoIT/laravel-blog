@@ -14,7 +14,7 @@
 					{{ $post->body }}
 				</p>
 				<div class="mt-2">
-					<img src="{{ App\Models\Post::showImage($post->image) }}" class="img-thumbnail mb-3" alt="{{ $post->image }}" />
+					<img src="{{ asset('/storage/images/' . $post->image)  }}" class="img-thumbnail mb-3" alt="{{ $post->image }}" />
 				</div>
 			</div>
 		</div>
