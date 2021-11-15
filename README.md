@@ -26,19 +26,16 @@ COPY ./my.cnf /etc/mysql/conf.d/my.cnf
 RUN chmod 644 /etc/mysql/conf.d/my.cnf
 ```
 
-#### install the project
+### project setup
 ```
 1. mkdir -p ./docker/php/bash/psysh
 2. touch ./docker/php/bash/.bash_history
 3. cp .env.template .env
 4. winpty docker-compose build --no-cache --force-rm
 5. winpty docker-compose up -d
-```
-### project setup
-```
-1. cp backend/.env.example backend/.env
-2. winpty docker-compose exec app composer install
-3. winpty docker-compose exec app php artisan key:generate
+7. cp backend/.env.example backend/.env
+8. winpty docker-compose exec app composer install
+9. winpty docker-compose exec app php artisan key:generate
 
 # modify this to your ./backend/.env file 
 APP_URL=http://localhost
@@ -51,9 +48,9 @@ DB_USERNAME=kredo
 DB_PASSWORD=password
 
 
-4. winpty docker-compose exec app php artisan config:cache
-5. winpty docker-compose exec app chown www-data storage/ -R
-6. winpty docker-compose exec app php artisan migrate
+10. winpty docker-compose exec app php artisan config:cache
+11. winpty docker-compose exec app chown www-data storage/ -R
+12. winpty docker-compose exec app php artisan migrate
 ```
 
 #### executables
