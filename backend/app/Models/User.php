@@ -14,8 +14,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    const S3_IMAGES_FOLDER  = 'avatars/';
-    const S3_DISK           = 's3';
     /**
      * The attributes that are mass assignable.
      *
@@ -49,21 +47,5 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
-    }
-
-    /**
-     * Show image that is fetched from the S3 server
-     *
-     * @param String $image
-     * @return String
-     */
-    public static function showAvatar($image)
-    {
-        return config('app.env') === 'local'
-                ? asset('/storage/avatars/' . $image) 
-                : Storage::disk(self::S3_DISK)->temporaryUrl(
-                    self::S3_IMAGES_FOLDER . $image,
-                    now()->addMinutes(10)
-                );
     }
 }

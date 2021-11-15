@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-3">
 		@if ($user->avatar)
-			<img src="{{ App\Models\User::showAvatar($user->avatar) }}" class="img-thumbnail mb-2" alt="{{ $user->avatar }}" />
+			<img src="{{ asset('/storage/avatars/' . $user->avatar) }}" class="img-thumbnail mb-2" alt="{{ $user->avatar }}" />
 		@else
 			<i class="far fa-image fa-9x"></i>
 		@endif
