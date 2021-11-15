@@ -10,10 +10,6 @@ use App\Models\Post;
 class PostController extends Controller
 {
     const LOCAL_STORAGE_FOLDER = 'public/images/';
-    const S3_IMAGES_FOLDER  = 'images/';
-
-    const LOCAL_DISK        = 'local';
-    const S3_DISK           = 's3';
 
     private $post;
 

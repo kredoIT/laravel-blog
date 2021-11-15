@@ -16,8 +16,6 @@
 2. cd project
 ```
 
-#### make sure the ./backend folder is empty
-
 #### Prioritize this change. Copy the line of code below and change the infra/mysql/Dockerfile code
 ```
 FROM mysql:8.0.22
