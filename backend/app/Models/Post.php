@@ -12,8 +12,6 @@ class Post extends Model
 {
     use HasFactory;
 
-    const S3_IMAGES_FOLDER  = 'images/';
-    const S3_DISK           = 's3';
     /**
      * The attributes that are mass assignable.
      *
@@ -39,21 +37,5 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    /**
-     * Show image that is fetched from the S3 server
-     *
-     * @param String $image
-     * @return String
-     */
-    public static function showImage($image)
-    {
-        return config('app.env') === 'local'
-                ? asset('/storage/images/' . $image) 
-                : Storage::disk(self::S3_DISK)->temporaryUrl(
-                    self::S3_IMAGES_FOLDER . $image,
-                    now()->addMinutes(10)
-                );
     }
 }
